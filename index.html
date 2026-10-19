@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#12131a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>四级单词</title>
+<title>松果单词</title>
 <style>
   :root{
     --bg1:#1a1d2b; --bg2:#12131a; --cover:0;
@@ -29,7 +29,8 @@
   #veil.show{opacity:1}
 
   /* 顶栏 */
-  header{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dim);z-index:2}
+  header{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dim);
+    position:relative;z-index:2}
   #barwrap{flex:1;height:6px;background:var(--line);border-radius:99px;overflow:hidden}
   #bar{height:100%;width:0;background:linear-gradient(90deg,#4b7bff,#3ecf8e);transition:width .3s}
   #stat{white-space:nowrap;font-variant-numeric:tabular-nums}
@@ -38,17 +39,18 @@
   header button:hover{color:var(--fg);border-color:#3a3f52}
 
   /* 模式标签 */
-  .tabs{display:flex;gap:6px;margin-top:10px;z-index:2}
+  .tabs{display:flex;gap:6px;margin-top:10px;position:relative;z-index:2}
   .tab{flex:1;height:34px;border-radius:10px;border:1px solid var(--line);
     background:rgba(24,26,36,.75);color:var(--dim);font-size:13px;cursor:pointer}
   .tab.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
   .tab span{font-size:11px;opacity:.85;margin-left:3px}
 
   /* 上下文行 */
-  .ctx{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:12px;color:var(--dim);z-index:2}
+  .ctx{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:12px;color:var(--dim);
+    position:relative;z-index:2}
   .ctx b{color:#cfd6ea;font-variant-numeric:tabular-nums;font-weight:600}
   .ctx .sp{flex:1}
-  .volnav{display:flex;align-items:center;gap:8px;margin-top:8px;z-index:2}
+  .volnav{display:flex;align-items:center;gap:8px;margin-top:8px;position:relative;z-index:2}
   .volnav button{background:rgba(24,26,36,.75);border:1px solid var(--line);color:var(--dim);
     border-radius:10px;cursor:pointer;font-size:13px;height:32px}
   .volnav button:hover{color:var(--fg);border-color:#3a3f52}
@@ -56,7 +58,8 @@
   #volbtn{flex:1;font-variant-numeric:tabular-nums}
 
   /* 卡片 */
-  main{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;z-index:2;padding:8px 0}
+  main{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;
+    position:relative;z-index:2;padding:8px 0}
   .card{width:100%;max-width:460px;min-height:230px;max-height:100%;overflow-y:auto;
     background:linear-gradient(180deg,rgba(32,35,47,.94),rgba(27,29,41,.94));
     border:1px solid var(--line);border-radius:22px;padding:26px 22px;
@@ -98,7 +101,8 @@
   #hint{margin-top:18px;font-size:12px;color:#5a6178}
 
   /* 底部 */
-  footer{display:flex;flex-direction:column;gap:10px;max-width:460px;width:100%;margin:0 auto;z-index:2}
+  footer{display:flex;flex-direction:column;gap:10px;max-width:460px;width:100%;margin:0 auto;
+    position:relative;z-index:2}
   .row{display:flex;gap:12px}
   .row.hide{display:none}
   button.big{flex:1;padding:15px 0;border:1px solid transparent;border-radius:14px;font-size:16px;
@@ -113,7 +117,7 @@
   /* 浮层 */
   .scrim{position:fixed;inset:0;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:opacity .2s;z-index:40}
   .scrim.show{opacity:1;pointer-events:auto}
-  .sheet{position:fixed;left:0;right:0;bottom:0;z-index:50;background:#171a24;border-top:1px solid var(--line);
+  .sheet{position:fixed;left:0;right:0;bottom:0;z-index:100;background:#171a24;border-top:1px solid var(--line);
     border-radius:20px 20px 0 0;padding:18px 20px calc(env(safe-area-inset-bottom) + 20px);
     transform:translateY(115%);transition:transform .26s ease;max-height:86vh;overflow:auto}
   .sheet.show{transform:translateY(0)}
@@ -167,7 +171,7 @@
 
   /* 详情 */
   #detail{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(.96);
-    width:min(440px,calc(100% - 32px));max-height:80vh;overflow:auto;z-index:52;
+    width:min(440px,calc(100% - 32px));max-height:80vh;overflow:auto;z-index:102;
     background:#171a24;border:1px solid var(--line);border-radius:20px;padding:20px;
     opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
   #detail.show{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
@@ -190,7 +194,7 @@
 
   #toast{position:fixed;left:50%;bottom:96px;transform:translate(-50%,10px);background:#2a2f40;
     color:#e8ecf8;padding:10px 18px;border-radius:10px;font-size:13px;opacity:0;transition:.22s;
-    z-index:60;pointer-events:none;max-width:90vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    z-index:110;pointer-events:none;max-width:90vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   #toast.show{opacity:1;transform:translate(-50%,0)}
 
   /* ===== 头部按钮：不受背景/透明度影响，永远是实心深色 ===== */
@@ -201,7 +205,7 @@
   #word{overflow-wrap:anywhere;max-width:100%;line-height:1.2}
 
   /* ===== 加载页 ===== */
-  #loading{position:fixed;inset:0;z-index:90;background:#12131a;display:flex;flex-direction:column;
+  #loading{position:fixed;inset:0;z-index:120;background:#12131a;display:flex;flex-direction:column;
     align-items:center;justify-content:center;gap:18px;transition:opacity .3s}
   #loading.hide{opacity:0;pointer-events:none}
   .spin{width:34px;height:34px;border:3px solid #2a2e3d;border-top-color:#5b8cff;border-radius:50%;
@@ -210,30 +214,59 @@
   .ltext{font-size:13px;color:#8b93ab;text-align:center;line-height:1.9}
   .ltext b{color:#cfd6ea}
 
-  /* ===== 欢迎页 ===== */
-  #welcome{position:fixed;inset:0;z-index:80;
-    background:radial-gradient(120% 80% at 50% 0%,var(--bg1),var(--bg2) 60%);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px}
-  #welcome.hide{display:none}
-  .wcard{width:100%;max-width:420px;background:#1b1d29;border:1px solid var(--line);border-radius:18px;padding:18px}
-  .wtitle{font-size:22px;font-weight:700}
-  .wsub{font-size:12px;color:#5a6178;margin:2px 0 14px}
+  /* ===== 主界面 / 词书 / 错题本 ===== */
+  /* ===== 背诵界面容器：自己当 flex 容器，否则里面的 z-index 会失效、被背景图盖住 ===== */
+  #studywrap{display:flex;flex-direction:column;flex:1;min-height:0;
+    position:relative;z-index:1}
+  #studywrap.hide{display:none}
+  #home,#bookpick,#wronglist{position:fixed;inset:0;z-index:80;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;padding:24px;gap:12px;
+    background:radial-gradient(120% 80% at 50% 0%,var(--bg1),var(--bg2) 60%)}
+  #home.hide,#bookpick.hide,#wronglist.hide{display:none}
+  .homebox{width:100%;max-width:420px;display:flex;flex-direction:column;gap:10px}
+  .homebox.wide{max-width:480px;max-height:100%}
+  .brand{font-size:30px;font-weight:800;letter-spacing:1px;text-align:center}
+  .brandsub{font-size:12px;color:#5a6178;text-align:center;margin-bottom:6px}
+  .brand2{font-size:19px;font-weight:700;margin-bottom:4px}
+  .homestat{font-size:12.5px;color:#8b93ab;text-align:center;line-height:1.8;margin-bottom:8px}
+  .hbtn{width:100%;padding:16px;border-radius:14px;border:1px solid var(--line);background:#1b1d29;
+    color:#cfd6ea;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;
+    font-family:inherit}
+  .hbtn.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700;justify-content:center}
+  .hbtn .hs{font-size:12px;color:#7d87a2;font-weight:400}
+  .hbtn.primary .hs{color:#dbe7ff}
+  .hrow{display:flex;gap:10px}
+  .hbtn.mini2{padding:12px;font-size:14px;justify-content:center;flex:1}
   .book{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:12px;
-    padding:12px;background:#20232f}
+    padding:12px;background:#20232f;width:100%;text-align:left;cursor:pointer;color:inherit;font:inherit}
   .book.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
-  .book.off{opacity:.45}
+  .book.off{opacity:.45;cursor:default}
   .book .bt{font-size:15px;font-weight:600}
   .book .bd{font-size:11.5px;color:#7d87a2;margin-top:3px}
   .book .bk{margin-left:auto;font-size:11px;color:#3ecf8e;white-space:nowrap}
-  .wbtn{width:100%;max-width:420px;padding:15px;border-radius:14px;font-size:16px;font-weight:600;cursor:pointer;
-    border:1px solid var(--line);background:#1b1d29;color:#cfd6ea}
-  #startbtn{background:var(--accent);border-color:var(--accent);color:#fff}
-  .wnote{font-size:11.5px;color:#5a6178;text-align:center;line-height:1.7;max-width:420px}
+  .wnote{font-size:11.5px;color:#5a6178;text-align:center;line-height:1.7}
+  .wllist{max-height:48vh;overflow:auto;display:flex;flex-direction:column;gap:6px;margin:4px 0}
+  .wlitem{display:flex;align-items:center;gap:10px;background:#1b1d29;border:1px solid var(--line);
+    border-radius:10px;padding:10px 12px;font-size:13px;cursor:pointer;width:100%;text-align:left;
+    color:inherit;font-family:inherit}
+  .wlitem b{color:#cfd6ea;min-width:86px}
+  .wlitem span{color:#7d87a2;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .wlitem i{font-style:normal;color:#e0a09a;font-size:11.5px}
+
+  /* ===== 设置目录 ===== */
+  .toc{display:flex;gap:6px;overflow-x:auto;margin:0 0 12px;padding-bottom:4px;scrollbar-width:none}
+  .toc::-webkit-scrollbar{display:none}
+  .toc button{flex:0 0 auto;padding:8px 13px;border-radius:9px;border:1px solid var(--line);
+    background:#1b1e28;color:#8b93ab;font-size:12.5px;cursor:pointer}
+  .toc button.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+  .grp{display:none}
+  .grp.on{display:block}
+  #homebtn{width:auto;padding:0 10px;font-size:17px;line-height:1}
 
   /* ===== 公告 ===== */
   #notice{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);
     width:min(420px,calc(100% - 32px));background:#171a24;border:1px solid var(--line);border-radius:18px;
-    padding:20px;z-index:85;box-shadow:0 20px 60px -20px #000}
+    padding:20px;z-index:105;box-shadow:0 20px 60px -20px #000}
   #notice.hide{display:none}
   #notice h4{margin:0 0 10px;font-size:16px}
   #noticebody{font-size:13px;color:#cfd6ea;line-height:1.8;white-space:pre-wrap;max-height:50vh;overflow:auto}
@@ -267,12 +300,14 @@
 <div id="bgimg"></div>
 <div id="veil"></div>
 
-<header>
+<header id="studyhead">
+  <button id="homebtn" title="返回主界面">⌂</button>
   <div id="barwrap"><div id="bar"></div></div>
   <div id="stat">加载中…</div>
   <button id="gear" title="设置">⚙<span>设置</span></button>
 </header>
 
+<div id="studywrap">
 <nav class="tabs">
   <button class="tab" id="tabToday" data-mode="today">今日</button>
   <button class="tab" id="tabVol" data-mode="vol">分册</button>
@@ -291,7 +326,7 @@
   <button id="volbtn" title="选择分册">第 1 册</button>
   <button id="next" title="下一册">›</button>
 </nav>
-<div class="ctx hide" id="ctxWrong">错词本 <b id="wronglabel">0 / 0</b></div>
+<div class="ctx hide" id="ctxWrong">错题本 <b id="wronglabel">0 / 0</b></div>
 
 <main>
   <div class="card" id="card">
@@ -335,112 +370,182 @@
   </div>
   <div class="tip" id="tip"></div>
 </footer>
+</div>
+
+<!-- ========== 主界面 ========== -->
+<div id="home" class="hide">
+  <div class="homebox">
+    <div class="brand">松果单词</div>
+    <div class="brandsub">CET-4 · 艾宾浩斯记忆</div>
+    <div class="homestat" id="homestat"></div>
+    <button class="hbtn primary" id="goStudy">进入学习</button>
+    <button class="hbtn" id="goBook">词书选择<span class="hs" id="bookname">四级单词书</span></button>
+    <button class="hbtn" id="goWrong">错题本<span class="hs" id="homewrong">0 个</span></button>
+    <div class="hrow">
+      <button class="hbtn mini2" id="homeSet">⚙ 设置</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 词书选择 ========== -->
+<div id="bookpick" class="hide">
+  <div class="homebox">
+    <div class="brand2">选择词书</div>
+    <button class="book on" id="bk4">
+      <div>
+        <div class="bt">大学英语四级单词书</div>
+        <div class="bd">3848 词 · 官方大纲口径</div>
+      </div>
+      <div class="bk">已选</div>
+    </button>
+    <button class="book off" disabled>
+      <div><div class="bt">大学英语六级单词书</div><div class="bd">敬请期待</div></div>
+    </button>
+    <button class="book off" disabled>
+      <div><div class="bt">考研核心词汇</div><div class="bd">敬请期待</div></div>
+    </button>
+    <button class="book off" disabled>
+      <div><div class="bt">雅思 / 托福词汇</div><div class="bd">敬请期待</div></div>
+    </button>
+    <p class="wnote">目前收录四级单词书，其它词书正在准备中。</p>
+    <button class="hbtn" id="bookback">返回</button>
+  </div>
+</div>
+
+<!-- ========== 错题本列表 ========== -->
+<div id="wronglist" class="hide">
+  <div class="homebox wide">
+    <div class="brand2">错题本 <span class="hs" id="wlcount"></span></div>
+    <div class="wllist" id="wlitems"></div>
+    <div class="hrow">
+      <button class="hbtn mini2" id="wlstudy">开始复习</button>
+      <button class="hbtn mini2" id="wlback">返回</button>
+    </div>
+  </div>
+</div>
 
 <!-- ========== 设置 ========== -->
 <div class="scrim" id="scrim"></div>
 <aside class="sheet" id="sheet">
-  <h3>学习计划</h3>
-  <div class="chips" id="newset"></div>
-  <p class="note" id="newnote"></p>
-  <div class="chips" id="groupset" style="margin-top:10px"></div>
-  <p class="note" id="groupnote"></p>
-
-  <h3>统计</h3>
-  <div class="statgrid" id="statgrid"></div>
-  <p class="note" id="statnote"></p>
-
-  <h3>声音</h3>
-  <div class="chips" id="sfxset"></div>
-  <label class="ctl">答对音量 <input type="range" id="yesvol" min="0" max="100" step="5"><span id="yesvolv">60%</span></label>
-  <label class="ctl">答错音量 <input type="range" id="novol" min="0" max="100" step="5"><span id="novolv">60%</span></label>
-  <div class="chips" id="bgmset" style="margin-top:12px"></div>
-  <div class="row2"><button id="audiotest">🔊 声音自检</button></div>
-  <label class="ctl">音乐音量 <input type="range" id="bgmvol" min="0" max="100" step="5"><span id="bgmvolv">25%</span></label>
-  <p class="note" id="audionote"></p>
-  <div class="err" id="audiodiag"></div>
-
-  <h3>跨设备同步</h3>
-  <input type="text" id="ghtoken" placeholder="GitHub Token（只需 gist 权限）" autocomplete="off">
-  <div class="row2">
-    <button id="ghcreate">创建云端存档</button>
-    <button id="ghpull">从云端拉取</button>
-  </div>
-  <div class="row2">
-    <button id="ghpush">立即上传</button>
-    <button id="ghauto">自动同步：开</button>
-  </div>
-  <div id="syncstate"></div>
-  <p class="note">Token 只存在你这台设备的浏览器里，不会发到别处。同步内容只有学习进度，不含词库。</p>
-  <textarea id="codebox" placeholder="这里是同步码：导出后复制，到另一台设备粘贴后点「导入」"></textarea>
-  <div class="row2">
-    <button id="exportbtn">导出同步码</button>
-    <button id="importbtn">导入同步码</button>
+  <div class="toc" id="toc">
+    <button data-g="sound" class="on">声音</button>
+    <button data-g="study">学习</button>
+    <button data-g="font">字号</button>
+    <button data-g="custom">自定义</button>
+    <button data-g="mine">我的</button>
   </div>
 
-  <h3>字号</h3>
-  <div id="fonts"></div>
-  <button class="row2" id="fontreset" style="margin-top:6px">恢复默认字号</button>
+  <!-- 声音 -->
+  <div class="grp on" id="grp-sound">
+    <h3>音效</h3>
+    <div class="chips" id="sfxset"></div>
+    <p class="note" style="margin-top:10px">答对时的声音</p>
+    <div class="chips" id="yespick"></div>
+    <label class="ctl">答对音量 <input type="range" id="yesvol" min="0" max="100" step="5"><span id="yesvolv">60%</span></label>
+    <p class="note" style="margin-top:10px">答错时的声音</p>
+    <div class="chips" id="nopick"></div>
+    <label class="ctl">答错音量 <input type="range" id="novol" min="0" max="100" step="5"><span id="novolv">60%</span></label>
 
-  <h3>发音</h3>
-  <div class="chips" id="engineset"></div>
-  <div class="chips" id="autospeak" style="margin-top:10px"></div>
-  <div class="row2"><button id="saytest">🔊 测试一下</button></div>
-  <p class="note" id="speechinfo"></p>
-  <p class="note">朗读卡顿时优先用「系统语音」（本地合成、零延迟）。在线发音会把读过的词缓存起来，
-  但第一次仍要 0.2~0.8 秒网络延迟。</p>
+    <h3>背景音乐</h3>
+    <div class="chips" id="bgmset"></div>
+    <div class="chips" id="bgmpick" style="margin-top:10px"></div>
+    <label class="ctl">音乐音量 <input type="range" id="bgmvol" min="0" max="100" step="5"><span id="bgmvolv">25%</span></label>
+    <p class="note" id="audionote"></p>
+    <div class="err" id="audiodiag"></div>
 
-  <h3>拼写填空</h3>
-  <div class="chips" id="spellset"></div>
-  <p class="note">开启后，已经复习过几轮的词会出现「英文句子挖空 + 中文释义」，让你把单词拼出来。
-  拼对了进白名单，之后复习间隔变长；不会就点「看答案」照着打一遍。</p>
-
-  <h3>派生词</h3>
-  <div class="chips" id="famset"></div>
-
-  <h3>错词本</h3>
-  <p class="note" id="wronginfo"></p>
-  <div class="row2">
-    <button id="openwrong">复习错词</button>
-    <button id="clearwrong">清空错词本</button>
+    <h3>英语朗读</h3>
+    <div class="chips" id="engineset"></div>
+    <div class="chips" id="autospeak" style="margin-top:10px"></div>
+    <div class="row2">
+      <button id="saytest">🔊 试听</button>
+      <button id="audiotest">🔊 声音自检</button>
+    </div>
+    <p class="note" id="speechinfo"></p>
   </div>
 
-  <h3>背景</h3>
-  <div id="swatches"></div>
-  <div class="row2">
-    <button id="pickimg">🖼 选一张本地图片</button>
-    <button id="clearimg">移除图片</button>
+  <!-- 学习 -->
+  <div class="grp" id="grp-study">
+    <h3>每天学多少</h3>
+    <div class="chips" id="newset"></div>
+    <p class="note" id="newnote"></p>
+    <h3>每册单词数</h3>
+    <div class="chips" id="groupset"></div>
+    <p class="note" id="groupnote"></p>
+    <h3>拼写填空</h3>
+    <div class="chips" id="spellset"></div>
+    <p class="note">打开后，复习过几轮的单词会出现英文句子填空和中文意思，让你把单词拼出来。拼对了以后复习间隔会变长。</p>
+    <h3>派生词</h3>
+    <div class="chips" id="famset"></div>
+    <h3>错题本</h3>
+    <p class="note" id="wronginfo"></p>
+    <div class="row2">
+      <button id="openwrong">复习错题</button>
+      <button id="clearwrong">清空错题本</button>
+    </div>
+    <h3>跨设备同步</h3>
+    <input type="text" id="ghtoken" placeholder="GitHub Token（只需 gist 权限）" autocomplete="off">
+    <div class="row2">
+      <button id="ghcreate">创建云端存档</button>
+      <button id="ghpull">从云端拉取</button>
+    </div>
+    <div class="row2">
+      <button id="ghpush">立即上传</button>
+      <button id="ghauto">自动同步：开</button>
+    </div>
+    <div id="syncstate"></div>
+    <p class="note">手机和电脑可以共用一份学习记录。Token 只保存在你自己的设备上。</p>
+    <textarea id="codebox" placeholder="这里是同步码：导出后复制，到另一台设备粘贴后点「导入」"></textarea>
+    <div class="row2">
+      <button id="exportbtn">导出同步码</button>
+      <button id="importbtn">导入同步码</button>
+    </div>
   </div>
-  <label class="ctl">遮罩 <input type="range" id="cover" min="0" max="90" step="5"><span id="coverv">0%</span></label>
-  <div class="err" id="bgerr"></div>
 
-  <h3>公告</h3>
-  <textarea id="noticeedit" placeholder="写下你想在打开 App 时显示的公告…"></textarea>
-  <div class="row2">
-    <button id="noticesave">保存公告</button>
-    <button id="noticeshow">现在预览</button>
+  <!-- 字号 -->
+  <div class="grp" id="grp-font">
+    <h3>字号</h3>
+    <div id="fonts"></div>
+    <button class="row2" id="fontreset">恢复默认字号</button>
+    <p class="note">长单词会自动缩小字号，不会显示不全。</p>
   </div>
 
-  <h3>See You Again · 带走你的足迹</h3>
-  <p class="note">把这些单词导出成 txt：学过的、错题本里的、或者全部。支持中英对照背，也支持只导中文方便打印默写。</p>
-  <div class="row2">
-    <button id="exLearned">导出「学过的」中英</button>
-    <button id="exWrong">导出「错题本」中英</button>
-  </div>
-  <div class="row2">
-    <button id="exAll">导出「全部单词」中英</button>
-    <button id="exCn">导出「学过的」仅中文</button>
+  <!-- 自定义 -->
+  <div class="grp" id="grp-custom">
+    <h3>主题</h3>
+    <div id="swatches"></div>
+    <h3>背景图片</h3>
+    <div class="row2">
+      <button id="pickimg">🖼 选一张图片</button>
+      <button id="clearimg">移除图片</button>
+    </div>
+    <label class="ctl">遮罩浓度 <input type="range" id="cover" min="0" max="90" step="5"><span id="coverv">0%</span></label>
+    <p class="note">图片只保存在你自己的设备上，不会上传。</p>
+    <div class="err" id="bgerr"></div>
   </div>
 
-  <h3>关于</h3>
-  <p class="note" id="verline"></p>
-  <div class="row2">
-    <button id="checkup">检查更新</button>
-    <button id="hardreload">强制刷新</button>
+  <!-- 我的 -->
+  <div class="grp" id="grp-mine">
+    <h3>我的数据</h3>
+    <div class="statgrid" id="statgrid"></div>
+    <p class="note" id="statnote"></p>
+    <h3>带走我的足迹</h3>
+    <p class="note">把背过的单词导出成 txt：中英对照可以拿着背，只导中文可以打印出来默写。</p>
+    <div class="row2">
+      <button id="exLearned">学过的（中英）</button>
+      <button id="exWrong">错题本（中英）</button>
+    </div>
+    <div class="row2">
+      <button id="exAll">全部单词（中英）</button>
+      <button id="exCn">学过的（仅中文）</button>
+    </div>
+    <h3>公告</h3>
+    <div class="row2"><button id="noticeshow">查看公告</button></div>
+    <h3>关于</h3>
+    <p class="note" id="verline"></p>
+    <div class="row2"><button id="checkup">检查更新</button><button id="hardreload">刷新到最新</button></div>
+    <h3>清除数据</h3>
+    <button id="reset">清空学习记录</button>
   </div>
-  <div class="row2"><button id="tohome">回到欢迎页</button></div>
-
-  <h3>危险操作</h3>
-  <button id="reset">清空所有学习进度</button>
 
   <button id="close">收起</button>
 </aside>
@@ -480,36 +585,12 @@
   <div class="ltext">正在准备词库、音效和发音……<br><b>请耐心等待 10 秒</b></div>
 </div>
 
-<!-- ========== 欢迎页 ========== -->
-<div id="welcome" class="hide">
-  <div class="wcard">
-    <div class="wtitle">四级单词</div>
-    <div class="wsub">选一本单词书开始</div>
-    <div class="book on" id="book1">
-      <div>
-        <div class="bt">大学英语四级单词书</div>
-        <div class="bd">官方大纲口径 · 3848 词 · 艾宾浩斯排期</div>
-      </div>
-      <div class="bk">已选</div>
-    </div>
-    <div class="book off" style="margin-top:10px">
-      <div>
-        <div class="bt">六级 / 考研 / 雅思</div>
-        <div class="bd">暂未收录</div>
-      </div>
-    </div>
-    <div class="wnote" style="margin-top:12px">因开发能力有限，暂时只有四级单词书，其它之后再加。</div>
-  </div>
-  <button class="wbtn" id="bigset">⚙ 设置</button>
-  <button class="wbtn" id="startbtn">开始学习</button>
-</div>
-
 <!-- ========== 公告 ========== -->
 <div id="notice" class="hide">
   <h4>📢 公告</h4>
   <div id="noticebody"></div>
   <button id="noticeok" style="width:100%;margin-top:16px;padding:12px;border-radius:12px;border:0;
-    background:var(--accent);color:#fff;font-size:15px;cursor:pointer">知道啦，开始学习</button>
+    background:var(--accent);color:#fff;font-size:15px;cursor:pointer">知道啦</button>
 </div>
 
 <div id="toast"></div>
@@ -520,7 +601,7 @@
   'use strict';
 
   // 每次改完 index.html，把这行改成当前时间——线上和本地对比就能看出是不是旧版本
-  var BUILD = '2026-10-18T23:50';
+  var BUILD = '2026-10-19T13:00';
 
   /* ===================== 常量 ===================== */
   var K = {
@@ -556,13 +637,17 @@
   ];
   var DT = { word: 42, phon: 15, trans: 17, ex: 15, fam: 13 };
 
-  // 音效池：全部来自用户自己录的音频（已从视频里抽音轨 + 去静音 + 统一音量）
-  // 写成不带扩展名的形式，加载时依次尝试 .wav / .mp3 / .ogg
+  // 音效库：可以放多个，用户自己选（占位的几个先复制自你录的音频，随时替换）
+  var AUDIO_LIB = {
+    yes: ['audio/yes', 'audio/yes_b', 'audio/yes_c'],
+    no:  ['audio/no1', 'audio/no2', 'audio/no_b', 'audio/no_c'],
+    bgm: ['audio/bgm', 'audio/bgm2', 'audio/bgm3']
+  };
   var AUDIO_SETS = {
-    yes:  ['audio/yes'],                // 答对
-    no:   ['audio/no1', 'audio/no2'],   // 答错（两个随机）
+    yes:  AUDIO_LIB.yes,
+    no:   AUDIO_LIB.no,
     done: [],                           // 完成音效：暂未提供，留空 = 不响
-    bgm:  ['audio/bgm']                 // 背景音乐
+    bgm:  AUDIO_LIB.bgm
   };
   var AUDIO_EXTS = ['.wav', '.mp3', '.ogg'];
   // 背景音乐通常是 mp3，先试 mp3，避免每次多一个 404 请求
@@ -617,8 +702,11 @@
   if (sound.noVol == null) sound.noVol = (sound.sfxVol != null) ? sound.sfxVol : 60;
   if (sound.autoSpeak == null) sound.autoSpeak = true;   // 每张卡片自动读一次
   if (sound.spell == null) sound.spell = false;          // 拼写填空默认关
+  if (sound.yesPick == null) sound.yesPick = 'all';      // 音效选择：'all' 或下标
+  if (sound.noPick == null) sound.noPick = 'all';
+  if (sound.bgmPick == null) sound.bgmPick = 0;
 
-  var DEFAULT_NOTICE = '欢迎使用四级单词 🎉\n\n' +
+  var DEFAULT_NOTICE = '欢迎使用松果单词 🎉\n\n' +
     '· 每天 20 个新词 + 到期复习，按艾宾浩斯间隔排期\n' +
     '· 连续 3 次「不认识」的词会自动进错题本，直到你能拼出它\n' +
     '· 打开「拼写填空」可以把背过的词默写出来，拼对后复习间隔变长\n' +
@@ -629,6 +717,7 @@
   var history = [];               // 上一个单词
   var goingBack = false;
   var spellState = null;          // 当前拼写题
+  var wrongPassed = {};           // 本次复习里点过「认识」的错题（本轮不再出现，但仍在错题本里）
   var updatedAt = store.get(K.updated, 0) || 0;
 
   var TOTAL_VOL = function () { return Math.max(1, Math.ceil(WORDS.length / groupSize)); };
@@ -813,7 +902,7 @@
     return arr;
   }
   function inPool(w) {
-    if (mode === 'wrong') return !!wrong[w.word];
+    if (mode === 'wrong') return !!wrong[w.word] && !wrongPassed[w.word];
     if (mode === 'vol') return !known[w.word];
     return false;
   }
@@ -869,7 +958,7 @@
     tabsUpdate();
     if (m === 'today') { buildToday(); }
     else if (m === 'vol') { queue = volWords(vol); }
-    else { wrongTotal = wrongCount(); queue = wrongList(); }
+    else { wrongTotal = wrongCount(); wrongPassed = {}; queue = wrongList(); }
     cur = null;
     next();
   }
@@ -1125,6 +1214,7 @@
     if (ok) {
       known[w.word] = 1;
       missStreak[w.word] = 0;
+      if (mode === 'wrong') wrongPassed[w.word] = 1;   // 错题本轮不再出现（仍在错题本里，拼出来才移出）
       // 注意：错题本不再因为「认识」自动移出，必须拼写通过才移出
     } else {
       delete known[w.word];
@@ -1213,12 +1303,12 @@
     return list[0];
   }
   function speechInfoText() {
-    if (!('speechSynthesis' in window)) return '系统语音：这个浏览器不支持';
+    if (!('speechSynthesis' in window)) return '这台设备不支持系统朗读，将使用在线朗读';
     if (!speech.ready) loadVoices();
     var v = pickVoice();
-    if (!speech.voices.length) return '系统语音：0 个声音（这台设备没装英文语音包，用在线发音）';
-    if (!v) return '系统语音：' + speech.voices.length + ' 个，但没有英语声音（用在线发音）';
-    return '系统语音：' + speech.voices.length + ' 个，使用「' + (v.name || v.lang) + '」';
+    if (!speech.voices.length) return '这台设备没有英文语音，将使用在线朗读';
+    if (!v) return '没有找到英文发音，将使用在线朗读';
+    return '朗读使用「' + (v.name || v.lang) + '」';
   }
   function refreshSpeechInfo() { if ($('speechinfo')) $('speechinfo').textContent = speechInfoText(); }
 
@@ -1377,30 +1467,17 @@
       });
     });
   }
-  // 自检失败时把「到底在找哪个地址」显示出来，并给一个可直接点开的链接
+  // 声音没加载出来时给一句人话 + 一个能直接点的测试链接
   function showAudioDiag() {
     var box = $('audiodiag');
     if (!box) return;
-    var abs = '';
-    try { abs = new URL('audio/yes.wav', location.href).href; } catch (e) { abs = 'audio/yes.wav'; }
-    var proto = '';
-    try { proto = location.protocol; } catch (e) {}
-    var tip = '';
-    if (proto === 'file:') {
-      tip = '你现在是双击打开的（file://）。如果浏览器读不到音频，请改用 start.bat。';
-    } else if (proto !== 'http:' && proto !== 'https:') {
-      tip = '当前不是正常的网页地址（' + proto + '），很可能是编辑器/聊天窗口的内嵌预览——里面读不到相对路径的文件。请用浏览器或 start.bat 打开。';
-    } else {
-      tip = '网页地址正常。如果下面的链接打不开，说明 audio/ 文件夹没有和 index.html 放在一起（比如上传到网上时漏传了 audio/）。';
-    }
+    var tip = '试试把 App 关掉重新打开一次。';
+    try {
+      if (location.protocol === 'file:') tip = '如果浏览器读不到声音，改用 start.bat 打开会更稳。';
+    } catch (e) {}
     box.innerHTML =
-      '当前页面：<b>' + location.href + '</b><br>' +
-      '音频应该在：<b>' + abs + '</b><br>' +
-      '<a href="audio/yes.wav" target="_blank" style="color:#8fb6ff">① 点这里直接在浏览器打开 audio/yes.wav</a>' +
-      '（能打开/能播放 = 文件没问题）<br>' +
-      '<a href="audio/bgm.mp3" target="_blank" style="color:#8fb6ff">② 点这里打开背景音乐 bgm.mp3</a><br>' +
-      tip + '<br>' +
-      '也可以按 F12 打开控制台，能看到每个加载失败的音频地址（<b>[cet4] 音频加载失败：…</b>）。';
+      '声音没能加载出来。' + tip + '<br>' +
+      '<a href="audio/yes.wav" target="_blank" style="color:#8fb6ff">点这里试试声音文件</a>';
     box.classList.add('show');
   }
   function audioSelfTest() {
@@ -1436,8 +1513,13 @@
   }
   function playSfx(name) {
     if (!sound.sfx) return;
-    var pool = sfxPools[name] || [];
-    if (!pool.length) return;
+    var all = sfxPools[name] || [];
+    if (!all.length) return;
+    var pick = (name === 'no') ? sound.noPick : sound.yesPick;
+    var pool = (pick === 'all' || pick == null || !AUDIO_LIB[name])
+      ? all
+      : all.filter(function (it) { return it.base === AUDIO_LIB[name][pick]; });
+    if (!pool.length) pool = all;
     var idx = Math.floor(Math.random() * pool.length);
     if (pool.length > 1 && idx === sfxLast[name]) idx = (idx + 1) % pool.length;   // 不连着重复
     sfxLast[name] = idx;
@@ -1454,10 +1536,12 @@
   var bgmVolume = function () { return Math.max(0, Math.min(1, (sound.bgmVol || 0) / 100)); };
   var bgmLoadedBase = null;
   function bgmPickRandom(exclude) {
-    // 只用你自己的那一首背景音乐
-    var pool = (AUDIO_SETS.bgm || []).slice(0, 1);
-    if (!pool.length) return;
-    var base = pool[0];
+    // 背景音乐：用用户选中的那一首
+    var list = AUDIO_LIB.bgm || [];
+    if (!list.length) return;
+    var idx = sound.bgmPick == null ? 0 : sound.bgmPick;
+    if (idx < 0 || idx >= list.length) idx = 0;
+    var base = list[idx];
     bgmLoadedBase = base;
     bgmEl = null;
     updateSoundUI();
@@ -1520,13 +1604,14 @@
     if ($('bgmset')) refreshChips($('bgmset'), sound.bgm);
     if ($('autospeak')) refreshChips($('autospeak'), sound.autoSpeak);
     if ($('spellset')) refreshChips($('spellset'), sound.spell);
+    if ($('yespick')) refreshChips($('yespick'), sound.yesPick);
+    if ($('nopick')) refreshChips($('nopick'), sound.noPick);
+    if ($('bgmpick')) refreshChips($('bgmpick'), sound.bgmPick);
     if ($('audionote')) {
       var n = sfxPools.yes.length + sfxPools.no.length + sfxPools.done.length;
-      var bgmName = bgmLoadedBase ? ('，当前音乐：' + bgmLoadedBase.split('/').pop()) : '';
       $('audionote').textContent = n
-        ? ('已加载 ' + n + ' 个音效（答对 ' + sfxPools.yes.length + ' / 答错 ' +
-           sfxPools.no.length + ' / 完成 ' + sfxPools.done.length + '）' + bgmName + '。')
-        : '没找到 audio/ 里的音频（不报错，只是没声音）。点下面的「🔊 声音自检」会显示诊断：到底在找哪个地址、能不能直接打开。';
+        ? ('音效和背景音乐已就绪，可在上面选择你喜欢的声音。')
+        : '声音没有加载成功，请重新打开 App 试试。';
     }
   }
   function armBgmGesture() {
@@ -1891,13 +1976,7 @@
   /* ===================== 版本 / 缓存 ===================== */
   function updateVerline() {
     if (!$('verline')) return;
-    var lm = '';
-    try { lm = document.lastModified || ''; } catch (e) {}
-    var proto = '';
-    try { proto = location.protocol; } catch (e) {}
-    $('verline').textContent = '版本 ' + BUILD +
-      (lm ? ' · 页面最后修改 ' + lm : '') +
-      (proto === 'file:' ? ' · 本地打开（file://）' : '');
+    $('verline').textContent = '松果单词 · 版本 ' + BUILD.slice(0, 10) + ' · 共 ' + WORDS.length + ' 个单词';
   }
   function hardReload() {
     try {
@@ -1918,7 +1997,7 @@
       if (remote === BUILD) { toast('已是最新版本（' + BUILD + '）'); return; }
       if (window.confirm('线上有新版本：' + remote + '\n本地：' + BUILD + '\n\n要强制刷新到新版吗？')) hardReload();
     }).catch(function (e) {
-      toast('检查失败：' + ((e && e.message) ? e.message : '网络问题') + '（双击打开时改成用 start.bat）');
+      toast('检查更新失败，请确认网络正常后重试');
     });
   }
 
@@ -2058,7 +2137,6 @@
     $('importbtn').addEventListener('click', importCode);
     $('checkup').addEventListener('click', checkUpdate);
     $('hardreload').addEventListener('click', function () { hardReload(); });
-    $('tohome').addEventListener('click', function () { closeSheet(); showWelcome(); });
     $('prevword').addEventListener('click', prevWord);
     $('addwrong').addEventListener('click', addToWrong);
     $('spellCheck').addEventListener('click', spellCheck);
@@ -2066,12 +2144,44 @@
     $('spellInput').addEventListener('keydown', function (e) {
       if (e.key === 'Enter') { e.preventDefault(); spellCheck(); }
     });
-    $('noticesave').addEventListener('click', function () {
-      noticeText = ($('noticeedit').value || '').trim() || DEFAULT_NOTICE;
-      store.set(K.notice, noticeText);
-      toast('公告已保存');
-    });
     $('noticeshow').addEventListener('click', showNotice);
+    /* 设置目录切换 */
+    var toc = $('toc');
+    var tocBtns = toc.getElementsByTagName('button');
+    for (var ti = 0; ti < tocBtns.length; ti++) {
+      (function (btn) {
+        btn.addEventListener('click', function () {
+          var g = btn.getAttribute('data-g');
+          for (var k = 0; k < tocBtns.length; k++) tocBtns[k].className = '';
+          btn.className = 'on';
+          ['sound', 'study', 'font', 'custom', 'mine'].forEach(function (name) {
+            $('grp-' + name).className = 'grp' + (name === g ? ' on' : '');
+          });
+        });
+      })(tocBtns[ti]);
+    }
+    /* 音效库 / 音乐库 选择 */
+    buildChips($('yespick'), [{ value: 'all', label: '随机全部' }].concat(
+      AUDIO_LIB.yes.map(function (b, i) { return { value: i, label: '音效 ' + (i + 1) }; }
+    )), sound.yesPick, function (v) {
+      sound.yesPick = v; store.set(K.sound, sound);
+      refreshChips($('yespick'), v);
+      playSfx('yes');
+    });
+    buildChips($('nopick'), [{ value: 'all', label: '随机全部' }].concat(
+      AUDIO_LIB.no.map(function (b, i) { return { value: i, label: '音效 ' + (i + 1) }; }
+    )), sound.noPick, function (v) {
+      sound.noPick = v; store.set(K.sound, sound);
+      refreshChips($('nopick'), v);
+      playSfx('no');
+    });
+    buildChips($('bgmpick'), AUDIO_LIB.bgm.map(function (b, i) {
+      return { value: i, label: i === 0 ? '我的音乐' : ('音乐 ' + (i + 1)) };
+    }), sound.bgmPick, function (v) {
+      sound.bgmPick = v; store.set(K.sound, sound);
+      refreshChips($('bgmpick'), v);
+      if (sound.bgm) { bgmStop(); bgmPickRandom(); }
+    });
     $('exLearned').addEventListener('click', function () {
       exportWords(learnedWords(), true, '四级单词 · 我学过的', '学过的单词-中英对照.txt', false);
     });
@@ -2085,8 +2195,8 @@
       exportWords(learnedWords(), false, '四级单词 · 学过（仅中文，按册分组）', '学过的单词-仅中文默写.txt', true);
     });
     $('openwrong').addEventListener('click', function () {
-      if (!wrongCount()) { toast('错词本还是空的'); return; }
-      closeSheet(); setMode('wrong');
+      if (!wrongCount()) { toast('错题本还是空的'); return; }
+      closeSheet(); showStudy(); setMode('wrong');
     });
     $('clearwrong').addEventListener('click', function () {
       if (!window.confirm('清空错词本？学习进度和记忆排期不受影响。')) return;
@@ -2195,7 +2305,9 @@
   document.addEventListener('keydown', function (e) {
     var tag = (e.target && e.target.tagName) ? String(e.target.tagName).toLowerCase() : '';
     if (tag === 'input' || tag === 'textarea') return;                   // 正在拼写，不要抢键
-    if (!$('welcome').classList.contains('hide')) return;                // 欢迎页不响应快捷键
+    if (!$('home').classList.contains('hide') ||
+        !$('bookpick').classList.contains('hide') ||
+        !$('wronglist').classList.contains('hide')) return;   // 不在背诵界面就不响应快捷键
     if (!$('notice').classList.contains('hide')) {
       if (e.key === 'Enter' || e.key === 'Escape') hideNotice();
       return;
@@ -2214,17 +2326,64 @@
     else { store.set(K.la, Date.now()); if (sound.bgm) bgmStart(); }
   });
 
-  /* ===================== 欢迎页 / 公告 / 导出 ===================== */
-  function showWelcome() { $('welcome').classList.remove('hide'); }
-  function startStudy() {
+  /* ===================== 主界面 / 公告 / 导出 ===================== */
+  function homeStats() {
+    if (!$('homestat')) return;
+    $('homewrong').textContent = wrongCount() + ' 个';
+    $('homestat').textContent = '已掌握 ' + totalKnown() + ' 词 · 待复习 ' + dueCount() +
+      ' 词 · 今日 ' + mins(todaySeconds()) + ' 分钟';
+    $('bookname').textContent = '四级单词书';
+  }
+  function showHome() {
+    $('home').classList.remove('hide');
+    $('studywrap').classList.add('hide');
+    $('bookpick').classList.add('hide');
+    $('wronglist').classList.add('hide');
+    homeStats();
+    bgmStop();
+  }
+  function showStudy() {
     started = true;
-    $('welcome').classList.add('hide');
+    $('home').classList.add('hide');
+    $('bookpick').classList.add('hide');
+    $('wronglist').classList.add('hide');
+    $('studywrap').classList.remove('hide');
     if (store.get(K.noticeSeen, '') !== BUILD) {
       showNotice();
       store.set(K.noticeSeen, BUILD);
     }
     touchTime();
     if (sound.autoSpeak && cur) speak(cur.word, 'word');
+    if (sound.bgm) bgmStart();
+  }
+  function showBooks() {
+    $('home').classList.add('hide');
+    $('bookpick').classList.remove('hide');
+  }
+  function openWrongList() {
+    var list = wrongList();
+    $('wlcount').textContent = list.length + ' 个';
+    var box = $('wlitems');
+    box.textContent = '';
+    if (!list.length) {
+      var d = document.createElement('div');
+      d.className = 'wnote';
+      d.textContent = '错题本还是空的。背单词时连续 3 次不认识的词会自动进来。';
+      box.appendChild(d);
+    } else {
+      list.forEach(function (w) {
+        var btn = document.createElement('button');
+        btn.className = 'wlitem';
+        var n = document.createElement('b'); n.textContent = w.word;
+        var t = document.createElement('span'); t.textContent = w.trans || '';
+        var c = document.createElement('i'); c.textContent = '×' + (wrong[w.word] || 1);
+        btn.appendChild(n); btn.appendChild(t); btn.appendChild(c);
+        btn.addEventListener('click', function () { openDetail(w.word); });
+        box.appendChild(btn);
+      });
+    }
+    $('home').classList.add('hide');
+    $('wronglist').classList.remove('hide');
   }
   function showNotice() {
     $('noticebody').textContent = noticeText;
@@ -2281,8 +2440,19 @@
     return arr;
   }
   function initWelcome() {
-    $('bigset').addEventListener('click', openSheet);
-    $('startbtn').addEventListener('click', startStudy);
+    $('goStudy').addEventListener('click', showStudy);
+    $('goBook').addEventListener('click', showBooks);
+    $('goWrong').addEventListener('click', openWrongList);
+    $('homeSet').addEventListener('click', openSheet);
+    $('homebtn').addEventListener('click', showHome);
+    $('bookback').addEventListener('click', showHome);
+    $('bk4').addEventListener('click', function () { toast('当前已经是四级单词书'); });
+    $('wlback').addEventListener('click', showHome);
+    $('wlstudy').addEventListener('click', function () {
+      if (!wrongCount()) { toast('错题本还是空的'); return; }
+      showStudy();
+      setMode('wrong');
+    });
     $('noticeok').addEventListener('click', hideNotice);
   }
 
@@ -2316,12 +2486,12 @@
   // 背景音乐不预加载，等开启音乐时随机挑一首
   if (sound.bgm) armBgmGesture();
 
-  // 欢迎页：等词库/音频准备一会儿再显示
+  // 主界面：等词库/音频准备一会儿再显示
   initWelcome();
-  $('noticeedit').value = noticeText;
+  $('studywrap').classList.add('hide');
   setTimeout(function () {
     $('loading').classList.add('hide');
-    showWelcome();
+    showHome();
   }, 600);
 
   // 启动时如果配了自动同步，先试着拉一次云端
