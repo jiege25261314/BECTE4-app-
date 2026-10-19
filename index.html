@@ -192,6 +192,74 @@
     color:#e8ecf8;padding:10px 18px;border-radius:10px;font-size:13px;opacity:0;transition:.22s;
     z-index:60;pointer-events:none;max-width:90vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   #toast.show{opacity:1;transform:translate(-50%,0)}
+
+  /* ===== 头部按钮：不受背景/透明度影响，永远是实心深色 ===== */
+  header button{background:#1b1d29 !important;color:#cfd6ea}
+  #gear{width:auto;padding:0 11px;display:inline-flex;align-items:center;gap:5px;font-size:13px}
+
+  /* ===== 长单词不溢出 ===== */
+  #word{overflow-wrap:anywhere;max-width:100%;line-height:1.2}
+
+  /* ===== 加载页 ===== */
+  #loading{position:fixed;inset:0;z-index:90;background:#12131a;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:18px;transition:opacity .3s}
+  #loading.hide{opacity:0;pointer-events:none}
+  .spin{width:34px;height:34px;border:3px solid #2a2e3d;border-top-color:#5b8cff;border-radius:50%;
+    animation:spin 1s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .ltext{font-size:13px;color:#8b93ab;text-align:center;line-height:1.9}
+  .ltext b{color:#cfd6ea}
+
+  /* ===== 欢迎页 ===== */
+  #welcome{position:fixed;inset:0;z-index:80;
+    background:radial-gradient(120% 80% at 50% 0%,var(--bg1),var(--bg2) 60%);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px}
+  #welcome.hide{display:none}
+  .wcard{width:100%;max-width:420px;background:#1b1d29;border:1px solid var(--line);border-radius:18px;padding:18px}
+  .wtitle{font-size:22px;font-weight:700}
+  .wsub{font-size:12px;color:#5a6178;margin:2px 0 14px}
+  .book{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:12px;
+    padding:12px;background:#20232f}
+  .book.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+  .book.off{opacity:.45}
+  .book .bt{font-size:15px;font-weight:600}
+  .book .bd{font-size:11.5px;color:#7d87a2;margin-top:3px}
+  .book .bk{margin-left:auto;font-size:11px;color:#3ecf8e;white-space:nowrap}
+  .wbtn{width:100%;max-width:420px;padding:15px;border-radius:14px;font-size:16px;font-weight:600;cursor:pointer;
+    border:1px solid var(--line);background:#1b1d29;color:#cfd6ea}
+  #startbtn{background:var(--accent);border-color:var(--accent);color:#fff}
+  .wnote{font-size:11.5px;color:#5a6178;text-align:center;line-height:1.7;max-width:420px}
+
+  /* ===== 公告 ===== */
+  #notice{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:min(420px,calc(100% - 32px));background:#171a24;border:1px solid var(--line);border-radius:18px;
+    padding:20px;z-index:85;box-shadow:0 20px 60px -20px #000}
+  #notice.hide{display:none}
+  #notice h4{margin:0 0 10px;font-size:16px}
+  #noticebody{font-size:13px;color:#cfd6ea;line-height:1.8;white-space:pre-wrap;max-height:50vh;overflow:auto}
+
+  /* ===== 卡片内拼写填空 ===== */
+  #spell{display:none;width:100%;margin-top:14px;padding-top:12px;border-top:1px solid var(--line);text-align:left}
+  #spell.show{display:block}
+  .spellsent{font-size:15px;line-height:1.9;color:#c6cde1}
+  .spellsent u{color:#a9c4ff;text-decoration:none;border-bottom:1px dashed #3a4256;padding:0 20px}
+  .spellsent em{font-style:normal;color:#7d87a2;font-size:13px}
+  #spellInput{width:100%;margin-top:10px;background:#12141c;border:1px solid var(--line);border-radius:10px;
+    color:#eceef6;padding:11px 12px;font-size:16px;font-family:inherit;outline:none}
+  #spellInput:focus{border-color:var(--accent)}
+  .spellrow{display:flex;gap:8px;margin-top:8px}
+  .spellrow button{flex:1;padding:10px;border-radius:10px;border:1px solid var(--line);background:#1e2230;
+    color:#cfd6ea;font-size:13px;cursor:pointer}
+  #spellMsg{margin-top:8px;font-size:12.5px;line-height:1.6;color:#8b93ab}
+  #spellMsg.ok{color:#3ecf8e}
+  #spellMsg.bad{color:#e2725b}
+
+  /* ===== 底部小按钮 ===== */
+  .mini{display:flex;gap:8px;margin-bottom:8px}
+  .ghost{flex:1;padding:9px 0;border-radius:10px;border:1px solid var(--line);background:#1b1d29;
+    color:#8b93ab;font-size:12.5px;cursor:pointer}
+  .ghost:hover{color:#cfd6ea}
+  .ghost.on{color:#e0a09a;border-color:#4a2f38}
 </style>
 </head>
 <body>
@@ -202,7 +270,7 @@
 <header>
   <div id="barwrap"><div id="bar"></div></div>
   <div id="stat">加载中…</div>
-  <button id="gear" title="设置">⚙</button>
+  <button id="gear" title="设置">⚙<span>设置</span></button>
 </header>
 
 <nav class="tabs">
@@ -237,11 +305,24 @@
     </div>
     <div id="fam"></div>
     <div id="forms"></div>
+    <div id="spell">
+      <div class="spellsent" id="spellsent"></div>
+      <input id="spellInput" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="把单词拼出来">
+      <div class="spellrow">
+        <button id="spellCheck">检查</button>
+        <button id="spellShow">不会，看答案</button>
+      </div>
+      <div id="spellMsg"></div>
+    </div>
     <div id="hint">点击卡片显示释义</div>
   </div>
 </main>
 
 <footer>
+  <div class="mini">
+    <button class="ghost" id="prevword">← 上一个</button>
+    <button class="ghost" id="addwrong">＋ 加入错题本</button>
+  </div>
   <div class="row" id="judge">
     <button class="big" id="no">不认识</button>
     <button class="big" id="yes">认识</button>
@@ -268,6 +349,16 @@
   <div class="statgrid" id="statgrid"></div>
   <p class="note" id="statnote"></p>
 
+  <h3>声音</h3>
+  <div class="chips" id="sfxset"></div>
+  <label class="ctl">答对音量 <input type="range" id="yesvol" min="0" max="100" step="5"><span id="yesvolv">60%</span></label>
+  <label class="ctl">答错音量 <input type="range" id="novol" min="0" max="100" step="5"><span id="novolv">60%</span></label>
+  <div class="chips" id="bgmset" style="margin-top:12px"></div>
+  <div class="row2"><button id="audiotest">🔊 声音自检</button></div>
+  <label class="ctl">音乐音量 <input type="range" id="bgmvol" min="0" max="100" step="5"><span id="bgmvolv">25%</span></label>
+  <p class="note" id="audionote"></p>
+  <div class="err" id="audiodiag"></div>
+
   <h3>跨设备同步</h3>
   <input type="text" id="ghtoken" placeholder="GitHub Token（只需 gist 权限）" autocomplete="off">
   <div class="row2">
@@ -290,22 +381,18 @@
   <div id="fonts"></div>
   <button class="row2" id="fontreset" style="margin-top:6px">恢复默认字号</button>
 
-  <h3>声音</h3>
-  <div class="chips" id="sfxset"></div>
-  <label class="ctl">音效音量 <input type="range" id="sfxvol" min="0" max="100" step="5"><span id="sfxvolv">60%</span></label>
-  <div class="chips" id="bgmset" style="margin-top:12px"></div>
-  <div class="chips" id="bgmmode" style="margin-top:10px"></div>
-  <div class="row2"><button id="bgmnext">换一首音乐</button><button id="audiotest">🔊 声音自检</button></div>
-  <label class="ctl">音乐音量 <input type="range" id="bgmvol" min="0" max="100" step="5"><span id="bgmvolv">25%</span></label>
-  <p class="note" id="audionote"></p>
-  <div class="err" id="audiodiag"></div>
-
   <h3>发音</h3>
   <div class="chips" id="engineset"></div>
+  <div class="chips" id="autospeak" style="margin-top:10px"></div>
   <div class="row2"><button id="saytest">🔊 测试一下</button></div>
   <p class="note" id="speechinfo"></p>
   <p class="note">朗读卡顿时优先用「系统语音」（本地合成、零延迟）。在线发音会把读过的词缓存起来，
   但第一次仍要 0.2~0.8 秒网络延迟。</p>
+
+  <h3>拼写填空</h3>
+  <div class="chips" id="spellset"></div>
+  <p class="note">开启后，已经复习过几轮的词会出现「英文句子挖空 + 中文释义」，让你把单词拼出来。
+  拼对了进白名单，之后复习间隔变长；不会就点「看答案」照着打一遍。</p>
 
   <h3>派生词</h3>
   <div class="chips" id="famset"></div>
@@ -326,12 +413,31 @@
   <label class="ctl">遮罩 <input type="range" id="cover" min="0" max="90" step="5"><span id="coverv">0%</span></label>
   <div class="err" id="bgerr"></div>
 
+  <h3>公告</h3>
+  <textarea id="noticeedit" placeholder="写下你想在打开 App 时显示的公告…"></textarea>
+  <div class="row2">
+    <button id="noticesave">保存公告</button>
+    <button id="noticeshow">现在预览</button>
+  </div>
+
+  <h3>See You Again · 带走你的足迹</h3>
+  <p class="note">把这些单词导出成 txt：学过的、错题本里的、或者全部。支持中英对照背，也支持只导中文方便打印默写。</p>
+  <div class="row2">
+    <button id="exLearned">导出「学过的」中英</button>
+    <button id="exWrong">导出「错题本」中英</button>
+  </div>
+  <div class="row2">
+    <button id="exAll">导出「全部单词」中英</button>
+    <button id="exCn">导出「学过的」仅中文</button>
+  </div>
+
   <h3>关于</h3>
   <p class="note" id="verline"></p>
   <div class="row2">
     <button id="checkup">检查更新</button>
     <button id="hardreload">强制刷新</button>
   </div>
+  <div class="row2"><button id="tohome">回到欢迎页</button></div>
 
   <h3>危险操作</h3>
   <button id="reset">清空所有学习进度</button>
@@ -367,6 +473,45 @@
 </div>
 
 <input type="file" id="file" accept="image/*" hidden>
+
+<!-- ========== 加载 ========== -->
+<div id="loading">
+  <div class="spin"></div>
+  <div class="ltext">正在准备词库、音效和发音……<br><b>请耐心等待 10 秒</b></div>
+</div>
+
+<!-- ========== 欢迎页 ========== -->
+<div id="welcome" class="hide">
+  <div class="wcard">
+    <div class="wtitle">四级单词</div>
+    <div class="wsub">选一本单词书开始</div>
+    <div class="book on" id="book1">
+      <div>
+        <div class="bt">大学英语四级单词书</div>
+        <div class="bd">官方大纲口径 · 3848 词 · 艾宾浩斯排期</div>
+      </div>
+      <div class="bk">已选</div>
+    </div>
+    <div class="book off" style="margin-top:10px">
+      <div>
+        <div class="bt">六级 / 考研 / 雅思</div>
+        <div class="bd">暂未收录</div>
+      </div>
+    </div>
+    <div class="wnote" style="margin-top:12px">因开发能力有限，暂时只有四级单词书，其它之后再加。</div>
+  </div>
+  <button class="wbtn" id="bigset">⚙ 设置</button>
+  <button class="wbtn" id="startbtn">开始学习</button>
+</div>
+
+<!-- ========== 公告 ========== -->
+<div id="notice" class="hide">
+  <h4>📢 公告</h4>
+  <div id="noticebody"></div>
+  <button id="noticeok" style="width:100%;margin-top:16px;padding:12px;border-radius:12px;border:0;
+    background:var(--accent);color:#fff;font-size:15px;cursor:pointer">知道啦，开始学习</button>
+</div>
+
 <div id="toast"></div>
 
 <script src="words.js?v=1"></script>
@@ -384,7 +529,8 @@
     mode: 'cet4.mode', vol: 'cet4.vol', theme: 'cet4.theme', cover: 'cet4.cover',
     engine: 'cet4.engine', fonts: 'cet4.fonts', group: 'cet4.group', famscope: 'cet4.famscope',
     bg: 'cet4.bg', newday: 'cet4.newperday', sync: 'cet4.sync', srsInit: 'cet4.srsinit',
-    sound: 'cet4.sound'
+    sound: 'cet4.sound', miss: 'cet4.miss', wl: 'cet4.wl',
+    notice: 'cet4.notice', noticeSeen: 'cet4.noticeseen'
   };
   // 艾宾浩斯（简化）：依次 5分钟 / 30分钟 / 12小时 / 1天 / 2天 / 4天 / 7天 / 15天 / 30天 / 60天 / 120天
   var STEPS = [5 * 60000, 30 * 60000, 12 * 3600000, 86400000, 2 * 86400000, 4 * 86400000,
@@ -449,6 +595,8 @@
   var wrong = store.get(K.wrong, {}) || {};
   var srs = store.get(K.srs, {}) || {};
   var times = store.get(K.time, {}) || {};
+  var missStreak = store.get(K.miss, {}) || {};     // 连续「不认识」次数
+  var wl = store.get(K.wl, {}) || {};               // 拼写白名单（默写正确过）
   var pos = Math.min(Math.max(parseInt(store.get(K.pos, 0), 10) || 0, 0), WORDS.length);
   var mode = store.get(K.mode, 'today');
   var theme = store.get(K.theme, 'night');
@@ -461,7 +609,26 @@
   var newPerDay = parseInt(store.get(K.newday, 20), 10) || 20;
   if (NEWDAYS.indexOf(newPerDay) < 0) newPerDay = 20;
   var syncCfg = store.get(K.sync, { token: '', gist: '', auto: true }) || { token: '', gist: '', auto: true };
-  var sound = store.get(K.sound, null) || { sfx: true, sfxVol: 60, bgm: false, bgmVol: 25, bgmMode: 'mine' };
+  var sound = store.get(K.sound, null) || {};
+  if (sound.sfx == null) sound.sfx = true;
+  if (sound.bgm == null) sound.bgm = false;
+  if (sound.bgmVol == null) sound.bgmVol = 25;
+  if (sound.yesVol == null) sound.yesVol = (sound.sfxVol != null) ? sound.sfxVol : 60;
+  if (sound.noVol == null) sound.noVol = (sound.sfxVol != null) ? sound.sfxVol : 60;
+  if (sound.autoSpeak == null) sound.autoSpeak = true;   // 每张卡片自动读一次
+  if (sound.spell == null) sound.spell = false;          // 拼写填空默认关
+
+  var DEFAULT_NOTICE = '欢迎使用四级单词 🎉\n\n' +
+    '· 每天 20 个新词 + 到期复习，按艾宾浩斯间隔排期\n' +
+    '· 连续 3 次「不认识」的词会自动进错题本，直到你能拼出它\n' +
+    '· 打开「拼写填空」可以把背过的词默写出来，拼对后复习间隔变长\n' +
+    '· 设置里可以调字号、音量、背景，还能跨设备同步进度\n\n' +
+    '坚持比方法重要，开始吧。';
+  var noticeText = store.get(K.notice, '') || DEFAULT_NOTICE;
+  var started = false;            // 点过「开始学习」没有（之前不自动朗读）
+  var history = [];               // 上一个单词
+  var goingBack = false;
+  var spellState = null;          // 当前拼写题
   var updatedAt = store.get(K.updated, 0) || 0;
 
   var TOTAL_VOL = function () { return Math.max(1, Math.ceil(WORDS.length / groupSize)); };
@@ -498,6 +665,8 @@
     store.set(K.srs, srs);
     store.set(K.pos, pos);
     store.set(K.time, times);
+    store.set(K.miss, missStreak);
+    store.set(K.wl, wl);
     updatedAt = Date.now();
     store.set(K.updated, updatedAt);
   }
@@ -576,7 +745,8 @@
     rec.n = (rec.n || 0) + 1;
     rec.last = now;
     if (ok) {
-      rec.s = Math.min(rec.s + 1, STEPS.length - 1);
+      // 白名单（默写正确过）的词，间隔加倍，减少复习频率
+      rec.s = Math.min(rec.s + (wl[w.word] ? 2 : 1), STEPS.length - 1);
       rec.due = now + STEPS[rec.s];
     } else {
       rec.s = 0;
@@ -654,8 +824,8 @@
     $('wnum').textContent = wn ? ' ' + wn : '';
     if ($('wronginfo')) {
       $('wronginfo').textContent = wn
-        ? ('错词本里有 ' + wn + ' 个词。')
-        : '错词本是空的。背单词时点「不认识」的词会自动进这里。';
+        ? ('错题本里有 ' + wn + ' 个词。要拼对这个词才会移出。')
+        : '错题本是空的。卡片上的「＋ 加入错题本」可以手动加；连续 3 次「不认识」也会自动进。';
     }
     if (mode === 'today') {
       $('bar').style.width = Math.min(100, todayDone / todayPlanTotal * 100) + '%';
@@ -745,6 +915,7 @@
     var nextTxt = '';
     if (rec) nextTxt = ' · 下次复习 ' + STEP_TXT[rec.s];
     $('hint').textContent = '认识就点「认识」，不认识点「不认识」' + nextTxt;
+    maybeSpell();
   }
   function hideParts() {
     ['trans', 'ex', 'fam', 'forms'].forEach(function (id) { $(id).classList.remove('show'); });
@@ -787,12 +958,24 @@
     box.appendChild(label);
     box.appendChild(document.createTextNode(f.join(' / ')));
   }
+  function fitWord(word) {
+    var base = fonts.word || 42;
+    var n = String(word || '').length;
+    var k = n > 15 ? 0.5 : n > 12 ? 0.62 : n > 9 ? 0.74 : n > 6 ? 0.88 : 1;
+    $('word').style.fontSize = Math.max(18, Math.round(base * k)) + 'px';
+  }
   function showWord(w, p) {
+    if (cur && cur.word !== w.word && !goingBack) {
+      history.push({ word: cur.word, pos: curPos });
+      if (history.length > 50) history.shift();
+    }
     cur = w; curPos = p; revealed = false;
+    closeSpell(true);
     $('card').classList.remove('done');
     $('judge').classList.remove('hide');
     $('after').classList.add('hide');
     $('word').textContent = w.word;
+    fitWord(w.word);
     $('phon').textContent = w.phonetic || '';
     $('trans').textContent = w.trans || '';
     renderBadge(w);
@@ -804,6 +987,94 @@
     prefetchTTS(w.word, 'word');       // 卡片一出现就提前把发音下好
     $('hint').textContent = '点击卡片显示释义';
     updateHeader();
+    // 每张卡片自动读一遍（点过「开始学习」之后才生效，避免开屏乱响）
+    if (started && sound.autoSpeak) {
+      setTimeout(function () { if (cur === w) speak(w.word, 'word'); }, 150);
+    }
+  }
+  function prevWord() {
+    if (!history.length) { toast('已经是第一个了'); return; }
+    var h = history.pop();
+    var w = MAP[String(h.word).toLowerCase()];
+    if (!w) { toast('找不到上一个词'); return; }
+    goingBack = true;
+    showWord(w, h.pos);
+    goingBack = false;
+    if (sound.autoSpeak) speak(w.word, 'word');
+  }
+
+  /* ===================== 拼写填空 ===================== */
+  function escRe(s) { return String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+  function spellEligible(w) {
+    if (!w || !sound.spell) return false;
+    if (!w.ex || !w.ex.en) return false;
+    if (mode === 'wrong') return !!wrong[w.word];       // 错词本：拼出来才移出
+    var rec = srs[w.word];
+    return !!(rec && rec.s >= 2);                        // 复习过几轮的词才考拼写
+  }
+  function closeSpell(keepHidden) {
+    spellState = null;
+    $('spell').classList.remove('show');
+    if ($('spellMsg')) { $('spellMsg').textContent = ''; $('spellMsg').className = ''; }
+    if (!keepHidden) $('judge').classList.remove('hide');
+  }
+  function maybeSpell() {
+    if (!cur || !spellEligible(cur)) { if ($('spell').classList.contains('show')) closeSpell(true); return; }
+    openSpell(cur);
+  }
+  function openSpell(w) {
+    spellState = { word: w, copy: false };
+    var forms = [w.word].concat(w.forms || []);
+    var re = new RegExp('\\b(' + forms.map(escRe).join('|') + ')\\b', 'gi');
+    var trans = String(w.trans || '').split('；')[0].slice(0, 22);
+    var sent = String(w.ex.en).replace(re, '<u>（　　　）</u><em>（' + trans + '）</em>');
+    $('spellsent').innerHTML = sent;
+    $('spellInput').value = '';
+    $('spellMsg').textContent = '把这个单词拼出来，拼对后复习间隔会变长';
+    $('spellMsg').className = '';
+    $('spellShow').textContent = '不会，看答案';
+    $('judge').classList.add('hide');
+    $('spell').classList.add('show');
+    try { $('spellInput').focus(); } catch (e) {}
+  }
+  function spellCheck() {
+    if (!spellState) return;
+    var w = spellState.word;
+    var val = String($('spellInput').value || '').trim().toLowerCase();
+    if (!val) { $('spellMsg').textContent = '先输入一个单词'; return; }
+    if (val === w.word.toLowerCase()) {
+      var copied = spellState.copy;
+      if (copied) {
+        if (wrong[w.word]) { delete wrong[w.word]; toast('照着打对了，已移出错题本'); }
+        missStreak[w.word] = 0;
+        $('spellMsg').className = 'ok';
+        $('spellMsg').textContent = '照着打对了 ✓';
+        saveAll(); schedulePush();
+        closeSpell();
+        mark(false);                 // 照着抄 = 还不算记住，SRS 退回第一档
+      } else {
+        wl[w.word] = 1;              // 默写正确 → 白名单
+        if (wrong[w.word]) { delete wrong[w.word]; toast('拼对了，已移出错题本'); }
+        missStreak[w.word] = 0;
+        $('spellMsg').className = 'ok';
+        $('spellMsg').textContent = '拼对了 ✓ 已加入白名单';
+        saveAll(); schedulePush();
+        closeSpell();
+        mark(true);
+      }
+    } else {
+      $('spellMsg').className = 'bad';
+      $('spellMsg').textContent = '不对，再试一次（不会可以点「看答案」）';
+      try { $('spellInput').select(); } catch (e) {}
+    }
+  }
+  function spellShowAnswer() {
+    if (!spellState) return;
+    spellState.copy = true;
+    $('spellMsg').className = '';
+    $('spellMsg').textContent = '答案：' + spellState.word.word + ' —— 照着打一遍就能过';
+    $('spellShow').textContent = '答案已显示';
+    try { $('spellInput').value = ''; $('spellInput').focus(); } catch (e) {}
   }
   function doneScreen(title, hint, which) {
     if (/完成|清完/.test(title)) playSfx('done');
@@ -841,7 +1112,7 @@
     for (var p = 0; p < queue.length; p++) {
       if (inPool(queue[p])) { showWord(queue[p], p); return; }
     }
-    if (mode === 'wrong') doneScreen('🎉 错词本清完了', '这些词你都点过「认识」了', ['backnormal']);
+    if (mode === 'wrong') doneScreen('🎉 错题本清完了', '这些词你都拼出来了', ['backnormal']);
     else doneScreen('🎉 第 ' + (vol + 1) + ' 册完成', '建议明天再背下一册',
       [vol < TOTAL_VOL() - 1 ? 'nextvol' : 'revol', vol < TOTAL_VOL() - 1 ? 'revol' : null].filter(Boolean));
   }
@@ -853,10 +1124,17 @@
     sessionAnswers++;
     if (ok) {
       known[w.word] = 1;
-      if (wrong[w.word]) delete wrong[w.word];
+      missStreak[w.word] = 0;
+      // 注意：错题本不再因为「认识」自动移出，必须拼写通过才移出
     } else {
       delete known[w.word];
-      wrong[w.word] = (wrong[w.word] || 0) + 1;
+      missStreak[w.word] = (missStreak[w.word] || 0) + 1;
+      if (missStreak[w.word] >= 3) {          // 连续 3 次不认识 → 自动进错题本
+        if (!wrong[w.word]) {
+          wrong[w.word] = 1;
+          toast('连续 3 次不认识，已加入错题本');
+        }
+      }
     }
     var rec = schedule(w, ok);
     playSfx(ok ? 'yes' : 'no');
@@ -1164,8 +1442,10 @@
     if (pool.length > 1 && idx === sfxLast[name]) idx = (idx + 1) % pool.length;   // 不连着重复
     sfxLast[name] = idx;
     var el = pool[idx].el;
+    var vol = (name === 'no') ? (sound.noVol == null ? 60 : sound.noVol)
+                              : (sound.yesVol == null ? 60 : sound.yesVol);
     try {
-      el.volume = Math.max(0, Math.min(1, (sound.sfxVol || 0) / 100));
+      el.volume = Math.max(0, Math.min(1, vol / 100));
       el.currentTime = 0;
       var p = el.play();
       if (p && p.catch) p.catch(function () {});
@@ -1174,13 +1454,10 @@
   var bgmVolume = function () { return Math.max(0, Math.min(1, (sound.bgmVol || 0) / 100)); };
   var bgmLoadedBase = null;
   function bgmPickRandom(exclude) {
-    var prev = exclude || bgmLoadedBase;
-    // 「只用自己的那首」就用 audio/bgm；「随机全部」才把自带的几首也加进池子
-    var pool = (sound.bgmMode === 'all') ? (AUDIO_SETS.bgm || []) : ['audio/bgm'];
-    var list = pool.filter(function (b) { return b !== prev; });
-    if (!list.length) list = pool;
-    if (!list.length) return;
-    var base = list[Math.floor(Math.random() * list.length)];
+    // 只用你自己的那一首背景音乐
+    var pool = (AUDIO_SETS.bgm || []).slice(0, 1);
+    if (!pool.length) return;
+    var base = pool[0];
     bgmLoadedBase = base;
     bgmEl = null;
     updateSoundUI();
@@ -1210,15 +1487,8 @@
     } else bgmStop();
     updateSoundUI();
   }
-  function bgmNext() {                       // 换一首背景音乐（一定换成不同的）
-    if (sound.bgmMode !== 'all') {
-      toast('当前只用你自己放的那首；设置里可切「随机全部」');
-      return;
-    }
-    var prev = bgmLoadedBase;
-    bgmStop();
-    bgmPickRandom(prev);
-    toast('换了一首');
+  function bgmNext() {                       // 背景音乐只有你自己那一首，不需要换
+    toast('背景音乐只有你放的这一首');
   }
   var duckTimer = null;
   var isTouch = (typeof navigator !== 'undefined') &&
@@ -1243,17 +1513,19 @@
     }
   }
   function updateSoundUI() {
-    if ($('sfxvol')) { $('sfxvol').value = String(sound.sfxVol); $('sfxvolv').textContent = sound.sfxVol + '%'; }
+    if ($('yesvol')) { $('yesvol').value = String(sound.yesVol); $('yesvolv').textContent = sound.yesVol + '%'; }
+    if ($('novol')) { $('novol').value = String(sound.noVol); $('novolv').textContent = sound.noVol + '%'; }
     if ($('bgmvol')) { $('bgmvol').value = String(sound.bgmVol); $('bgmvolv').textContent = sound.bgmVol + '%'; }
     if ($('sfxset')) refreshChips($('sfxset'), sound.sfx);
     if ($('bgmset')) refreshChips($('bgmset'), sound.bgm);
-    if ($('bgmmode')) refreshChips($('bgmmode'), sound.bgmMode || 'mine');
+    if ($('autospeak')) refreshChips($('autospeak'), sound.autoSpeak);
+    if ($('spellset')) refreshChips($('spellset'), sound.spell);
     if ($('audionote')) {
       var n = sfxPools.yes.length + sfxPools.no.length + sfxPools.done.length;
       var bgmName = bgmLoadedBase ? ('，当前音乐：' + bgmLoadedBase.split('/').pop()) : '';
       $('audionote').textContent = n
         ? ('已加载 ' + n + ' 个音效（答对 ' + sfxPools.yes.length + ' / 答错 ' +
-           sfxPools.no.length + ' / 完成 ' + sfxPools.done.length + '），每次随机播放一个' + bgmName + '。')
+           sfxPools.no.length + ' / 完成 ' + sfxPools.done.length + '）' + bgmName + '。')
         : '没找到 audio/ 里的音频（不报错，只是没声音）。点下面的「🔊 声音自检」会显示诊断：到底在找哪个地址、能不能直接打开。';
     }
   }
@@ -1288,6 +1560,7 @@
         var v = Math.max(d.min, Math.min(d.max, (fonts[d.key] || d.dflt) + k * d.step));
         fonts[d.key] = v; store.set(K.fonts, fonts);
         val.textContent = v + 'px'; applyFonts();
+        if (cur) fitWord(cur.word);        // 字号改了，当前长单词要重新适配，避免显示不全
       }
       minus.addEventListener('click', function () { bump(-1); });
       plus.addEventListener('click', function () { bump(1); });
@@ -1708,6 +1981,22 @@
       toast(speechInfoText());
     });
 
+    buildChips($('autospeak'), [
+      { value: true, label: '自动朗读：开' }, { value: false, label: '自动朗读：关' }
+    ], sound.autoSpeak, function (v) {
+      sound.autoSpeak = v; store.set(K.sound, sound);
+      refreshChips($('autospeak'), v);
+      if (v && cur) speak(cur.word, 'word');
+    });
+    buildChips($('spellset'), [
+      { value: false, label: '拼写填空：关' }, { value: true, label: '拼写填空：开' }
+    ], sound.spell, function (v) {
+      sound.spell = v; store.set(K.sound, sound);
+      refreshChips($('spellset'), v);
+      if (!v) closeSpell();
+      else if (cur && revealed) maybeSpell();
+    });
+
     /* 声音 */
     buildChips($('sfxset'), [{ value: true, label: '音效：开' }, { value: false, label: '音效：关' }], sound.sfx,
       function (v) {
@@ -1722,18 +2011,14 @@
         bgmApply();
         if (v) armBgmGesture();
       });
-    $('sfxvol').addEventListener('input', function (e) {
-      sound.sfxVol = parseInt(e.target.value, 10) || 0;
+    $('yesvol').addEventListener('input', function (e) {
+      sound.yesVol = parseInt(e.target.value, 10) || 0;
       store.set(K.sound, sound);
       updateSoundUI();
     });
-    $('bgmnext').addEventListener('click', function () { bgmNext(); });
-    buildChips($('bgmmode'), [
-      { value: 'mine', label: '只用我放的那首' }, { value: 'all', label: '随机全部' }
-    ], sound.bgmMode || 'mine', function (v) {
-      sound.bgmMode = v; store.set(K.sound, sound);
-      refreshChips($('bgmmode'), v);
-      if (sound.bgm) { bgmStop(); bgmLoadedBase = null; bgmPickRandom(); }
+    $('novol').addEventListener('input', function (e) {
+      sound.noVol = parseInt(e.target.value, 10) || 0;
+      store.set(K.sound, sound);
       updateSoundUI();
     });
     $('audiotest').addEventListener('click', function () { audioSelfTest(); });
@@ -1746,6 +2031,7 @@
     $('fontreset').addEventListener('click', function () {
       fonts = JSON.parse(JSON.stringify(DT)); store.set(K.fonts, fonts);
       applyFonts(); buildFontRows();
+      if (cur) fitWord(cur.word);
     });
     $('ghcreate').addEventListener('click', function () {
       syncCfg.token = ($('ghtoken').value || '').trim();
@@ -1772,6 +2058,32 @@
     $('importbtn').addEventListener('click', importCode);
     $('checkup').addEventListener('click', checkUpdate);
     $('hardreload').addEventListener('click', function () { hardReload(); });
+    $('tohome').addEventListener('click', function () { closeSheet(); showWelcome(); });
+    $('prevword').addEventListener('click', prevWord);
+    $('addwrong').addEventListener('click', addToWrong);
+    $('spellCheck').addEventListener('click', spellCheck);
+    $('spellShow').addEventListener('click', spellShowAnswer);
+    $('spellInput').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); spellCheck(); }
+    });
+    $('noticesave').addEventListener('click', function () {
+      noticeText = ($('noticeedit').value || '').trim() || DEFAULT_NOTICE;
+      store.set(K.notice, noticeText);
+      toast('公告已保存');
+    });
+    $('noticeshow').addEventListener('click', showNotice);
+    $('exLearned').addEventListener('click', function () {
+      exportWords(learnedWords(), true, '四级单词 · 我学过的', '学过的单词-中英对照.txt', false);
+    });
+    $('exWrong').addEventListener('click', function () {
+      exportWords(wrongList(), true, '四级单词 · 错题本', '错题本-中英对照.txt', false);
+    });
+    $('exAll').addEventListener('click', function () {
+      exportWords(WORDS.slice(), true, '四级单词 · 全部', '全部单词-中英对照.txt', false);
+    });
+    $('exCn').addEventListener('click', function () {
+      exportWords(learnedWords(), false, '四级单词 · 学过（仅中文，按册分组）', '学过的单词-仅中文默写.txt', true);
+    });
     $('openwrong').addEventListener('click', function () {
       if (!wrongCount()) { toast('错词本还是空的'); return; }
       closeSheet(); setMode('wrong');
@@ -1881,6 +2193,13 @@
     applyCover();
   });
   document.addEventListener('keydown', function (e) {
+    var tag = (e.target && e.target.tagName) ? String(e.target.tagName).toLowerCase() : '';
+    if (tag === 'input' || tag === 'textarea') return;                   // 正在拼写，不要抢键
+    if (!$('welcome').classList.contains('hide')) return;                // 欢迎页不响应快捷键
+    if (!$('notice').classList.contains('hide')) {
+      if (e.key === 'Enter' || e.key === 'Escape') hideNotice();
+      return;
+    }
     if ($('detail').classList.contains('show')) { if (e.key === 'Escape') closeDetail(); return; }
     if ($('sheet').classList.contains('show') || $('picker').classList.contains('show')) {
       if (e.key === 'Escape') { closeSheet(); closePicker(); }
@@ -1894,6 +2213,78 @@
     if (document.hidden) { store.set(K.la, 0); bgmStop(); }
     else { store.set(K.la, Date.now()); if (sound.bgm) bgmStart(); }
   });
+
+  /* ===================== 欢迎页 / 公告 / 导出 ===================== */
+  function showWelcome() { $('welcome').classList.remove('hide'); }
+  function startStudy() {
+    started = true;
+    $('welcome').classList.add('hide');
+    if (store.get(K.noticeSeen, '') !== BUILD) {
+      showNotice();
+      store.set(K.noticeSeen, BUILD);
+    }
+    touchTime();
+    if (sound.autoSpeak && cur) speak(cur.word, 'word');
+  }
+  function showNotice() {
+    $('noticebody').textContent = noticeText;
+    $('notice').classList.remove('hide');
+  }
+  function hideNotice() { $('notice').classList.add('hide'); }
+  function addToWrong() {
+    if (!cur) return;
+    if (wrong[cur.word]) { toast('已经在错题本里了'); return; }
+    wrong[cur.word] = 1;
+    saveAll(); schedulePush(); updateHeader(); renderBadge(cur);
+    toast('已加入错题本');
+  }
+  function downloadText(name, text) {
+    try {
+      var blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = name;
+      a.style.display = 'none';
+      (document.body || document.documentElement).appendChild(a);
+      a.click();
+      setTimeout(function () { try { URL.revokeObjectURL(a.href); a.remove(); } catch (e) {} }, 1500);
+      toast('已导出 ' + name);
+    } catch (e) { toast('导出失败：' + ((e && e.message) ? e.message : e)); }
+  }
+  function lineOf(w, withEn, idx) {
+    var t = String(w.trans || '').replace(/\s+/g, ' ');
+    if (withEn) return (idx != null ? idx + '. ' : '') + w.word + '   ' + t;
+    return (idx != null ? idx + '. ' : '') + t;
+  }
+  function exportWords(list, withEn, title, name, groupByVol) {
+    if (!list.length) { toast('没有可导出的单词'); return; }
+    var out = [title, '共 ' + list.length + ' 个单词', ''];
+    if (groupByVol) {
+      var groups = {};
+      list.forEach(function (w) {
+        var v = Math.floor((IDX[w.word] == null ? 0 : IDX[w.word]) / groupSize) + 1;
+        (groups[v] = groups[v] || []).push(w);
+      });
+      Object.keys(groups).sort(function (a, b) { return a - b; }).forEach(function (v) {
+        out.push('—— 第 ' + v + ' 册 ——');
+        groups[v].forEach(function (w, j) { out.push(lineOf(w, withEn, j + 1)); });
+        out.push('');
+      });
+    } else {
+      list.forEach(function (w, i) { out.push(lineOf(w, withEn, i + 1)); });
+    }
+    downloadText(name, out.join('\n'));
+  }
+  function learnedWords() {
+    var arr = WORDS.filter(function (w) { return known[w.word] || srs[w.word]; });
+    arr.sort(function (a, b) { return (a.rank || 0) - (b.rank || 0); });
+    return arr;
+  }
+  function initWelcome() {
+    $('bigset').addEventListener('click', openSheet);
+    $('startbtn').addEventListener('click', startStudy);
+    $('noticeok').addEventListener('click', hideNotice);
+  }
 
   /* ===================== 启动 ===================== */
   migrate();
@@ -1924,6 +2315,14 @@
   armSfxRetry();               // 有的浏览器要等第一次点击才肯加载媒体
   // 背景音乐不预加载，等开启音乐时随机挑一首
   if (sound.bgm) armBgmGesture();
+
+  // 欢迎页：等词库/音频准备一会儿再显示
+  initWelcome();
+  $('noticeedit').value = noticeText;
+  setTimeout(function () {
+    $('loading').classList.add('hide');
+    showWelcome();
+  }, 600);
 
   // 启动时如果配了自动同步，先试着拉一次云端
   if (syncCfg.token && syncCfg.auto) {
